@@ -3,88 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Web Của Tôi</title>
+    <title>Giáng Sinh An Lành</title>
     <style>
-        /* SỬA LỖI ẢNH: Vừa khung và không bị méo */
-        .image-gallery img {
-            width: 100%;       /* Chiều rộng chiếm hết khung chứa */
-            height: 250px;     /* Bạn có thể tùy chỉnh chiều cao cố định */
-            
-            /* Lệnh quan trọng nhất để ảnh không bị méo */
-            object-fit: cover; 
-            
-            display: block;
-            border-radius: 10px;
-            margin-bottom: 15px;
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f2f5;
         }
 
-        /* SỬA LỖI CAMERA: Vừa khung điện thoại */
-        .video-container {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            overflow: hidden;
+        /* 1. SỬA ẢNH KHÔNG BỊ MÉO */
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .gallery img {
+            width: 90%;          /* Chiều rộng chiếm 90% màn hình điện thoại */
+            max-width: 400px;    /* Không quá to trên máy tính */
+            height: 300px;       /* Chiều cao cố định để tạo khung */
+            
+            object-fit: cover;   /* GIỮ TỈ LỆ: Ảnh sẽ tự cắt để vừa khít 300px mà không bị bóp méo */
+            
             border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* 2. SỬA KHUNG CAMERA VỪA MÀN HÌNH */
+        .video-wrapper {
+            width: 90%;
+            max-width: 400px;
+            margin: 20px auto;
+            aspect-ratio: 3/4;   /* Tạo khung hình đứng giống điện thoại */
+            overflow: hidden;
+            border-radius: 20px;
             background: #000;
+            border: 5px solid #fff;
+            position: relative;
         }
 
         video {
-            width: 100%;    /* Camera luôn vừa khít khung chứa */
-            height: auto;
-            display: block;
-            /* Soi gương cho camera trước tự nhiên */
-            transform: scaleX(-1); 
+            width: 100%;
+            height: 100%;
+            object-fit: cover;   /* Camera cũng sẽ phủ kín khung hình, không bị đen 2 bên */
+            transform: scaleX(-1); /* Soi gương cho tự nhiên */
         }
 
         button {
-            display: block;
-            margin: 20px auto;
-            padding: 12px 24px;
-            background-color: #007bff;
+            background: #e44d26;
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(228, 77, 38, 0.3);
         }
     </style>
 </head>
 <body>
 
-    <div class="image-gallery">
+    <h1>Merry Christmas!</h1>
+
+    <div class="gallery">
         <img src="anh1.jpg" alt="Ảnh 1">
         <img src="anh2.jpg" alt="Ảnh 2">
     </div>
 
-    <div class="video-container">
-        <video id="video" autoplay playsinline muted></video>
-    </div>
-    
-    <button id="startCam">Bật Camera</button>
-
-    <script>
-        const video = document.getElementById('video');
-        const button = document.getElementById('startCam');
-
-        button.addEventListener('click', async () => {
-            try {
-                // Cấu hình chuẩn cho cả máy tính và điện thoại
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: "user", // Ưu tiên cam trước
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    } 
-                });
-                video.srcObject = stream;
-                button.textContent = "Camera đang hoạt động";
-                button.disabled = true;
-                button.style.backgroundColor = "#28a745";
-            } catch (err) {
-                alert("Lỗi: Không thể mở Camera. Hãy đảm bảo bạn dùng link HTTPS và đã cho phép quyền truy cập!");
-                console.error(err);
-            }
-        });
-    </script>
-
-</body>
-</html>
+    <div class="video-wrapper">
