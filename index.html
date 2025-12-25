@@ -42,10 +42,9 @@
         /* Camera Preview Vandiep */
         #camera-preview {
             position: absolute; top: 15px; right: 15px;
-            width: 120px; aspect-ratio: 16 / 9;
+            width: 120px; height: 90px;
             border: 2px solid rgba(255,0,0,0.5); 
             transform: scaleX(-1); opacity: 0.6; border-radius: 8px;
-            object-fit: cover;
         }
         
         /* Vandiep */
@@ -265,41 +264,23 @@
             scene.add(points);
             return points;
         }
-function createPhotos() {
-    const FRAME_W = 8;
-    const FRAME_H = 8;
 
-    const geo = new THREE.PlaneGeometry(FRAME_W, FRAME_H);
-    const borderGeo = new THREE.PlaneGeometry(9, 9); 
-    const borderMat = new THREE.MeshBasicMaterial({ color: 0xFFD700 }); 
+        function createPhotos() {
+            const geo = new THREE.PlaneGeometry(8, 8);
+            const borderGeo = new THREE.PlaneGeometry(9, 9); 
+            const borderMat = new THREE.MeshBasicMaterial({ color: 0xFFD700 }); 
 
-    for (let i = 0; i < 5; i++) {
-
-        const tex = photoTextures[i];
-
-        // ⭐ object-fit: cover cho texture
-        const imgW = tex.image.width;
-        const imgH = tex.image.height;
-        coverTexture(tex, FRAME_W, FRAME_H, imgW, imgH);
-
-        const mat = new THREE.MeshBasicMaterial({
-            map: tex,
-            side: THREE.DoubleSide
-        });
-
-        const mesh = new THREE.Mesh(geo, mat);
-
-        const border = new THREE.Mesh(borderGeo, borderMat);
-        border.position.z = -0.1;
-        mesh.add(border);
-
-        mesh.visible = false;
-        mesh.scale.set(0, 0, 0);
-
-        scene.add(mesh);
-        photoMeshes.push(mesh);
-    }
-}
+            for(let i=0; i<5; i++) {
+                const mat = new THREE.MeshBasicMaterial({ map: photoTextures[i], side: THREE.DoubleSide });
+                const mesh = new THREE.Mesh(geo, mat);
+                const border = new THREE.Mesh(borderGeo, borderMat);
+                border.position.z = -0.1; 
+                mesh.add(border);
+                mesh.visible = false; mesh.scale.set(0,0,0);
+                scene.add(mesh);
+                photoMeshes.push(mesh);
+            }
+        }
 
         function createDecorations() {
             // MERRY CHRISTMAS Vandiep
@@ -309,7 +290,7 @@ function createPhotos() {
             ctx.font = 'bold italic 90px "Times New Roman"';
             ctx.fillStyle = '#FFD700'; ctx.textAlign = 'center';
             ctx.shadowColor = "#FF0000"; ctx.shadowBlur = 40; 
-            ctx.fillText("CHÚNG TA VÀ 2025", 512, 130);
+            ctx.fillText("MERRY CHRISTMAS", 512, 130);
             const tex = new THREE.CanvasTexture(canvas);
             const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.AdditiveBlending });
             titleMesh = new THREE.Mesh(new THREE.PlaneGeometry(60, 15), mat);
@@ -341,7 +322,7 @@ function createPhotos() {
             lCtx.font = 'bold 120px "Segoe UI", sans-serif';
             lCtx.fillStyle = '#FF69B4'; lCtx.textAlign = 'center';
             lCtx.shadowColor = "#FF1493"; lCtx.shadowBlur = 40; 
-            lCtx.fillText("THÂN AI NẤY LO ❤️", 512, 130);
+            lCtx.fillText("I LOVE YOU ❤️", 512, 130);
             const loveTex = new THREE.CanvasTexture(loveCanvas);
             const loveMat = new THREE.MeshBasicMaterial({ map: loveTex, transparent: true, blending: THREE.AdditiveBlending });
             loveMesh = new THREE.Mesh(new THREE.PlaneGeometry(70, 18), loveMat);
